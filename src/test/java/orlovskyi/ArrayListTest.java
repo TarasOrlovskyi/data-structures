@@ -10,26 +10,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArrayListTest extends AbstractListTest {
 
     @Test
-    void capacityTest() {
+    void setCapacityTest() {
+        ArrayList<String> stringList = new ArrayList<>(1);
+        stringList.add("string");
+        stringList.add("int");
+        stringList.add("boolean");
+        stringList.add("char");
+        stringList.add("date");
+        stringList.add("float");
+        assertEquals(7, stringList.getCapacity());
+    }
+
+    @Test
+    void defaultCapacityTest() {
         ArrayList<Integer> integerList = new ArrayList<>();
         assertEquals(5, integerList.getCapacity());
         integerList.add(1);
+        integerList.add(2);
         integerList.add(3);
-        integerList.add(0);
-        integerList.add(2, 2);
         integerList.add(4);
-        integerList.add(5, 5);
+        integerList.add(5);
         integerList.add(6);
+        integerList.add(7);
         assertEquals(8, integerList.getCapacity());
-
-        ArrayList<String> stringList = new ArrayList<>(1);
-        stringList.add(0, "string");
-        stringList.add(1, "int");
-        stringList.add("boolean");
-        stringList.add(1, "char");
-        stringList.add(1, "date");
-        stringList.add("float");
-        assertEquals(7, stringList.getCapacity());
     }
 
     public <T> List<T> getList() {
