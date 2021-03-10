@@ -37,15 +37,15 @@ public abstract class AbstractList<T> implements List<T> {
         if (isEmpty()) {
             throw new IndexOutOfBoundsException("List is empty! There is no elements!");
         } else if (index < 0 || index >= size()) {
-            throw new IndexOutOfBoundsException("In fact Index: " + index + ". But Index must be " +
+            throw new IndexOutOfBoundsException("Index: " + index + " out of range! Index must be " +
                     "between 0 and " + (size() - 1));
         }
     }
 
     protected void validateIndexForAdd(int index) {
         if (index < 0 || index > size()) {
-            throw new IndexOutOfBoundsException("In fact Index: " + index + ". But Index must be " +
-                    "between 0 and " + size());
+            throw new IndexOutOfBoundsException("Index: " + index + " out of range! Index must be " +
+            "between 0 and " + size());
         }
     }
 }
