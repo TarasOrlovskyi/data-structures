@@ -114,7 +114,7 @@ class LinkedListTest extends AbstractListTest {
     }
 
     @Test
-    void getNonexistentElementNoSuchElementExceptionTest() {
+    void getNonexistentElementTest() {
         LinkedList<Integer> linkedList = new LinkedList<>();
 
         assertThrows(NoSuchElementException.class, () -> {

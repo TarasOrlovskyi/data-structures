@@ -6,6 +6,7 @@ public class ArrayList<T> extends AbstractList<T> {
 
     private static final int INITIAL_CAPACITY = 5;
     private T[] array;
+    private int size;
 
     public ArrayList() {
         array = (T[]) new Object[INITIAL_CAPACITY];
@@ -89,6 +90,11 @@ public class ArrayList<T> extends AbstractList<T> {
             array[i] = null;
         }
         size = 0;
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     public int getCapacity() {

@@ -35,6 +35,28 @@ class ArrayListTest extends AbstractListTest {
         assertEquals(8, integerList.getCapacity());
     }
 
+    @Test
+    void capacityOfListWhenDeleteElementTest() {
+        ArrayList<Integer> integerList = new ArrayList<>();
+        assertEquals(5, integerList.getCapacity());
+        integerList.add(1);
+        integerList.add(2);
+        integerList.add(3);
+        integerList.add(4);
+        integerList.add(5);
+        integerList.add(6);
+        integerList.add(7);
+        assertEquals(8, integerList.getCapacity());
+        integerList.remove(0);
+        integerList.remove(0);
+        integerList.remove(0);
+        integerList.remove(0);
+        integerList.remove(0);
+        integerList.remove(0);
+        assertEquals(8, integerList.getCapacity());
+        assertEquals(1, integerList.size());
+    }
+
     public <T> List<T> getList() {
         return new ArrayList<>();
     }

@@ -12,12 +12,14 @@ public abstract class AbstractListTest {
     @Test
     void addWithIndexFirstLastAndMiddleElementTest() {
         list.add(0, "First");
-        list.add(1, "Middle");
+        list.add(1, "Next");
         list.add(2, "Last");
-        assertEquals(3, list.size());
+        list.add(1, "Middle");
+        assertEquals(4, list.size());
         assertEquals("First", list.get(0));
         assertEquals("Middle", list.get(1));
-        assertEquals("Last", list.get(2));
+        assertEquals("Next", list.get(2));
+        assertEquals("Last", list.get(3));
     }
 
     @Test
@@ -33,7 +35,7 @@ public abstract class AbstractListTest {
     }
 
     @Test
-    void addFirstElementByIndexInClearListTest() {
+    void addFirstElementByIndexInClearedListTest() {
 
         list.add(0, "1");
         assertEquals(1, list.size());
@@ -41,24 +43,35 @@ public abstract class AbstractListTest {
     }
 
     @Test
-    void addNullElementTest() {
-        list.add("one");
-        list.add(null);
+    void addNullElementWithIndexTest() {
+        list.add(0, "one");
+        list.add(0, null);
+        list.add(2, null);
         list.add(1, null);
-        list.add("two");
-        list.add(4, null);
 
-        assertEquals(5, list.size());
+        assertEquals(4, list.size());
 
-        assertEquals("one", list.get(0));
+        assertNull(list.get(0));
         assertNull(list.get(1));
-        assertNull(list.get(2));
-        assertEquals("two", list.get(3));
-        assertNull(list.get(4));
+        assertEquals("one", list.get(2));
+        assertNull(list.get(3));
     }
 
     @Test
-    void addOutOfListItemIndexOutOfBoundsExceptionTest() {
+    void addNullElementWithoutIndexTest() {
+        list.add(null);
+        list.add("one");
+        list.add(null);
+
+        assertEquals(3, list.size());
+
+        assertNull(list.get(0));
+        assertEquals("one", list.get(1));
+        assertNull(list.get(2));
+    }
+
+    @Test
+    void addElementByIndexOutOfBoundsTest() {
         list.add("green");
         list.add("white");
         list.add("yellow");
@@ -116,6 +129,9 @@ public abstract class AbstractListTest {
         assertTrue(list.remove("yellow"));
 
         assertEquals(2, list.size());
+
+        assertEquals("white", list.get(0));
+        assertEquals("white", list.get(1));
     }
 
     @Test
@@ -138,7 +154,7 @@ public abstract class AbstractListTest {
     }
 
     @Test
-    void removeUnreachableElementIndexOutOfBoundsExceptionTest() {
+    void removeElementByIndexOutOfBoundsTest() {
         assertThrows(IndexOutOfBoundsException.class, () -> {
             list.remove(0);
         });
@@ -180,7 +196,7 @@ public abstract class AbstractListTest {
     }
 
     @Test
-    void getUnreachableElementIndexOutOfBoundsExceptionTest() {
+    void getElementByIndexOutOfBoundsTest() {
         assertThrows(IndexOutOfBoundsException.class, () -> {
             list.get(0);
         });
@@ -210,19 +226,18 @@ public abstract class AbstractListTest {
         assertEquals(3, list.size());
 
         assertEquals("green", list.set(0, "red"));
-        assertEquals("red", list.get(0));
-
         assertEquals("white", list.set(1, "brown"));
-        assertEquals("brown", list.get(1));
-
         assertEquals("yellow", list.set(2, "pink"));
+
+        assertEquals("red", list.get(0));
+        assertEquals("brown", list.get(1));
         assertEquals("pink", list.get(2));
 
         assertEquals(3, list.size());
     }
 
     @Test
-    void setListWithOneElementTest() {
+    void setElementInListWithOneElementTest() {
         list.add("first");
         assertEquals("first", list.set(0, "replacement"));
         assertEquals("replacement", list.get(0));
@@ -239,7 +254,11 @@ public abstract class AbstractListTest {
     }
 
     @Test
-    void setUnreachableElementIndexOutOfBoundsExceptionTest() {
+    void setElementByIndexOutOfBoundsTest() {
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            list.set(0, "red");
+        });
+
         list.add("green");
         list.add("white");
         list.add("yellow");
@@ -254,22 +273,15 @@ public abstract class AbstractListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> {
             list.set(5, "5");
         });
-
-        list.clear();
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            list.set(0, "red");
-        });
     }
 
     @Test
-    void indexOfWithExistAndNonexistentElementTest() {
+    void indexOfWithExistElementTest() {
         list.add("green");
         list.add("white");
         list.add("yellow");
         list.add("white");
         list.add("black");
-
-        assertEquals(-1, list.indexOf("red"));
 
         assertEquals(0, list.indexOf("green"));
         assertEquals(1, list.indexOf("white"));
@@ -279,19 +291,38 @@ public abstract class AbstractListTest {
     }
 
     @Test
-    void lastIndexOfWithExistAndNonexistentElementTest() {
+    void indexOfWithNonexistentElementTest() {
+        list.add("green");
+        list.add("white");
+        list.add("yellow");
+
+        assertEquals(-1, list.indexOf("red"));
+        assertEquals(-1, list.indexOf("blue"));
+
+    }
+
+    @Test
+    void lastIndexOfWithExistElementTest() {
         list.add("green");
         list.add("white");
         list.add("yellow");
         list.add("white");
         list.add("black");
 
-        assertEquals(-1, list.lastIndexOf("brown"));
-
         assertEquals(0, list.lastIndexOf("green"));
         assertEquals(3, list.lastIndexOf("white"));
         assertEquals(2, list.lastIndexOf("yellow"));
         assertEquals(4, list.lastIndexOf("black"));
+    }
+
+    @Test
+    void lastIndexOfWithNonexistentElementTest() {
+        list.add("green");
+        list.add("white");
+        list.add("yellow");
+
+        assertEquals(-1, list.lastIndexOf("brown"));
+        assertEquals(-1, list.lastIndexOf("red"));
     }
 
     @Test
@@ -318,13 +349,25 @@ public abstract class AbstractListTest {
     }
 
     @Test
-    void containsTest() {
+    void containsNotNullElementTest() {
+        list.add("green");
+        list.add("white");
+        list.add("yellow");
+
+        assertTrue(list.contains("green"));
+        assertTrue(list.contains("white"));
+        assertTrue(list.contains("yellow"));
+
+    }
+
+    @Test
+    void containsWithMissingElementElementTest() {
         list.add("green");
         list.add("white");
         list.add("yellow");
 
         assertFalse(list.contains("pink"));
-        assertTrue(list.contains("white"));
+        assertFalse(list.contains("red"));
     }
 
     @Test
