@@ -38,7 +38,7 @@ class LinkedListTest extends AbstractListTest {
     }
 
     @Test
-    void addFirstWithNullElement() {
+    void addFirstWithNullElementTest() {
         LinkedList<Integer> linkedList = new LinkedList<>();
 
         linkedList.addFirst(1);
@@ -53,7 +53,7 @@ class LinkedListTest extends AbstractListTest {
     }
 
     @Test
-    void addLastWithNullElement() {
+    void addLastWithNullElementTest() {
         LinkedList<Integer> linkedList = new LinkedList<>();
 
         linkedList.addLast(null);
@@ -114,7 +114,7 @@ class LinkedListTest extends AbstractListTest {
     }
 
     @Test
-    void getNonexistentElementNoSuchElementException() {
+    void getNonexistentElementNoSuchElementExceptionTest() {
         LinkedList<Integer> linkedList = new LinkedList<>();
 
         assertThrows(NoSuchElementException.class, () -> {

@@ -7,7 +7,6 @@ public class LinkedList<T> extends AbstractList<T> {
 
     private Node head;
     private Node tail;
-    private int size;
 
     public void addFirst(T element) {
         add(0, element);
@@ -135,11 +134,6 @@ public class LinkedList<T> extends AbstractList<T> {
             }
         }
         return node;
-    }
-
-    @Override
-    public int size() {
-        return size;
     }
 
     private void removeNodeByIndex(Node node, int index) {
